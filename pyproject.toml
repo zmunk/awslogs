@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zmunk-awslogs"
+version = "1.0.0"
+description = "CLI-friendly AWS log viewer"
+readme = "README.md"
+authors = [{ name = "zmunk", email = "ibrahim.tigrek@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["aws", "boto3", "logs", "cloudwatch", "lambda"]
+dependencies = ["boto3"]
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/zmunk/awslogs"
