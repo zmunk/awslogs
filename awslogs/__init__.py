@@ -89,14 +89,25 @@ def get_log_history(log_group, delta):
             break
 
     for log_stream_name in log_stream_names[::-1]:
-        response = client.get_log_events(
-            logGroupName=log_group,
-            logStreamName=log_stream_name,
-        )
-        for event in response["events"]:
-            timestamp = parse_time_from_timestamp(event["timestamp"])
+        for timestamp, message in process_log_stream(log_group, log_stream_name):
             if timestamp < start_time:
                 continue
+            yield timestamp, message
+
+
+def process_log_stream(log_group, log_stream_name):
+    args = {
+        "logGroupName": log_group,
+        "logStreamName": log_stream_name,
+    }
+    while True:
+        response = client.get_log_events(**args)
+        token = response["nextBackwardToken"]
+        if token == args.get("nextToken"):
+            return
+        args["nextToken"] = token
+        for event in response["events"]:
+            timestamp = parse_time_from_timestamp(event["timestamp"])
             yield timestamp, event["message"]
 
 
