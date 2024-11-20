@@ -111,27 +111,16 @@ def process_log_stream(log_group, log_stream_name):
             yield timestamp, event["message"]
 
 
-def get_lines(message):
-    try:
-        data = json.loads(message)
-    except json.decoder.JSONDecodeError:
-        return [message]
-    except Exception:
-        raise
-    else:
-        return json.dumps(data, indent=4).split("\n")
-
-
-def split_string_into_chunks(message, chunk_size):
-    for line in get_lines(message):
+def get_chunks(message, chunk_size):
+    for line in message.split("\n"):
+        line = line.replace("\t", "  ")
         for i in range(0, len(line), chunk_size):
             yield line[i : i + chunk_size]
 
 
 def print_message(timestamp: str, message, terminal_width):
     print(blue(timestamp.ljust(TIMESTAMP_COL_WIDTH)), end="")
-    message = message.strip("\n").replace("\n", " ").replace("\t", "  ")
-    chunks = split_string_into_chunks(message, terminal_width - TIMESTAMP_COL_WIDTH)
+    chunks = get_chunks(message, terminal_width - TIMESTAMP_COL_WIDTH)
     print(next(chunks))
     for chunk in chunks:
         print(" " * TIMESTAMP_COL_WIDTH + chunk)
