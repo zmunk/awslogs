@@ -18,7 +18,10 @@ def grey(s):
 
 
 def trail_logs(log_group, log_time):
-    terminal_width = os.get_terminal_size().columns
+    try:
+        terminal_width = os.get_terminal_size().columns
+    except OSError:
+        terminal_width = 80
 
     print(grey("retrieving log history..."), end="\r")
     try:
