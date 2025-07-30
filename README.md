@@ -1,3 +1,4 @@
+[![PyPI](https://img.shields.io/pypi/v/zmunk-awslogs/v1.0.2)](https://pypi.org/project/zmunk-awslogs/)
 
 # AWS Logs Viewer
 

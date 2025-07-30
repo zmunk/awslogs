@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zmunk-awslogs"
-version = "1.0.1"
+version = "1.0.2"
 description = "CLI-friendly AWS log viewer"
 readme = "README.md"
 authors = [{ name = "zmunk", email = "ibrahim.tigrek@gmail.com" }]
